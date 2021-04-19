@@ -2,7 +2,7 @@
 setup.displayName=<%= scope['bitbucket::display_name'] %>
 setup.baseUrl=<%= scope['bitbucket::base_url'] %>
 setup.license=<%= scope['bitbucket::license'] %>
-<% if scope.lookupvar('bitbucket::manage_sysadmin') == false -%>
+<% if scope.lookupvar('bitbucket::manage_sysadmin') == true -%>
 setup.sysadmin.username=<%= scope['bitbucket::sysadmin_username'] %>
 setup.sysadmin.password=<%= scope['bitbucket::sysadmin_password'] %>
 setup.sysadmin.displayName=<%= scope['bitbucket::sysadmin_name'] %>
