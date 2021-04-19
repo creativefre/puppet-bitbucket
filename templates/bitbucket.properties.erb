@@ -2,14 +2,17 @@
 setup.displayName=<%= scope['bitbucket::display_name'] %>
 setup.baseUrl=<%= scope['bitbucket::base_url'] %>
 setup.license=<%= scope['bitbucket::license'] %>
+<% if scope.lookupvar('bitbucket::manage_sysadmin') == false -%>
 setup.sysadmin.username=<%= scope['bitbucket::sysadmin_username'] %>
 setup.sysadmin.password=<%= scope['bitbucket::sysadmin_password'] %>
 setup.sysadmin.displayName=<%= scope['bitbucket::sysadmin_name'] %>
 setup.sysadmin.emailAddress=<%= scope['bitbucket::sysadmin_email'] %>
+<% end -%>
 <%- @config_properties.sort.each do |key,value| -%>
 <%=   key %>=<%= value %>
 <%- end -%>
 <% end -%>
+<% if scope.lookupvar('bitbucket::is_mirror') == false -%>
 <% if scope.lookupvar('bitbucket::dbdriver') -%>jdbc.driver=<%= scope.lookupvar('bitbucket::dbdriver') %><% end %>
 <% if scope.lookupvar('bitbucket::dburl') %>jdbc.url=<%= scope.lookupvar('bitbucket::dburl') %><% end %>
 <% if scope.lookupvar('bitbucket::dbuser') %>jdbc.user=<%= scope.lookupvar('bitbucket::dbuser') %><% end %>
@@ -17,6 +20,7 @@ setup.sysadmin.emailAddress=<%= scope['bitbucket::sysadmin_email'] %>
 <% if scope.function_versioncmp([scope['bitbucket::version'], '5.0.0']) >= 0 -%>
 <% if scope.lookupvar('bitbucket::tomcat_port') %>server.port=<%= scope.lookupvar('bitbucket::tomcat_port') %><% end %>
 <% if scope.lookupvar('bitbucket::context_path') %>server.context-path=<%= scope.lookupvar('bitbucket::context_path') %><% end %>
+<% end %>
 <%- if @proxy -%>
 <%- @proxy.sort.each do |key,value| -%>
 <%= key %>=<%= value %>

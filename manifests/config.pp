@@ -10,6 +10,7 @@ class bitbucket::config(
   $context_path = $bitbucket::context_path,
   $tomcat_port  = $bitbucket::tomcat_port,
   $config_properties = $bitbucket::config_properties,
+  $is_mirror = $bitbucket::is_mirror,
 ) {
 
   # Atlassian changed where files are installed from ver 3.2.0
@@ -58,9 +59,9 @@ class bitbucket::config(
     mode    => '0750',
     require => Class['bitbucket::install'],
     notify  => Class['bitbucket::service'],
-  } ->
+  }
 
-  file { "${bitbucket::webappdir}/bin/${bitbucket_user_script}.sh":
+  -> file { "${bitbucket::webappdir}/bin/${bitbucket_user_script}.sh":
     content => template("bitbucket/${bitbucket_user_script}.sh.erb"),
     mode    => '0750',
     require => [
@@ -68,17 +69,17 @@ class bitbucket::config(
       File[$bitbucket::webappdir],
       File[$bitbucket::homedir]
     ],
-  }->
+  }
 
-  file { $server_xml:
+  -> file { $server_xml:
     ensure  => $bitbucket_server_xml_ensure,
     content => template('bitbucket/server.xml.erb'),
     mode    => '0640',
     require => Class['bitbucket::install'],
     notify  => Class['bitbucket::service'],
-  } ->
+  }
 
-  ini_setting { 'bitbucket_httpport':
+  -> ini_setting { 'bitbucket_httpport':
     ensure  => $bitbucket_http_port_ensure,
     path    => "${bitbucket::webappdir}/conf/scripts.cfg",
     section => '',
@@ -86,9 +87,9 @@ class bitbucket::config(
     value   => $tomcat_port,
     require => Class['bitbucket::install'],
     before  => Class['bitbucket::service'],
-  } ->
+  }
 
-  file { "${bitbucket::homedir}/${moved}bitbucket.properties":
+  -> file { "${bitbucket::homedir}/${moved}bitbucket.properties":
     content => template('bitbucket/bitbucket.properties.erb'),
     mode    => '0640',
     require => [
