@@ -1,7 +1,7 @@
 <% if scope.function_versioncmp([scope['bitbucket::version'], '3.8.0']) >= 0 -%>
-setup.displayName=<%= scope['bitbucket::display_name'] %>
-setup.baseUrl=<%= scope['bitbucket::base_url'] %>
-setup.license=<%= scope['bitbucket::license'] %>
+<% if scope.lookupvar('bitbucket::display_name') -%>setup.displayName=<%= scope['bitbucket::display_name'] %><% end %>
+<% if scope.lookupvar('bitbucket::base_url') -%>setup.baseUrl=<%= scope['bitbucket::base_url'] %><% end %>
+<% if scope.lookupvar('bitbucket::license') -%>setup.license=<%= scope['bitbucket::license'] %><% end %>
 <% if scope.lookupvar('bitbucket::manage_sysadmin') == true -%>
 setup.sysadmin.username=<%= scope['bitbucket::sysadmin_username'] %>
 setup.sysadmin.password=<%= scope['bitbucket::sysadmin_password'] %>
